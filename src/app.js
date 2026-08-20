@@ -7,7 +7,7 @@ const routes = {
 
 async function router() {
     const path = window.location.pathname
-    const route = routes[path].route || routes['/'].route
+    const route = routes[path]?.route || routes['/'].route
 
     try {
         const response = await fetch(route)
@@ -18,7 +18,18 @@ async function router() {
 
         const html = await response.text()
 
-        document.body.innerHTML = html
+        const body = document.body
+        body.innerHTML = html
+
+        const scripts = body.querySelectorAll('script')
+        scripts.forEach((oldScript) => {
+            const newScript = document.createElement('script')
+            Array.from(oldScript.attributes).forEach((attr) => {
+                newScript.setAttribute(attr.name, attr.value)
+            })
+            newScript.textContent = oldScript.textContent
+            oldScript.parentNode.replaceChild(newScript, oldScript)
+        })
     } catch (error) {
         document.body.innerHTML = '<h1>404</h1><p>Page not found.</p>'
     }
