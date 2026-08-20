@@ -1,15 +1,29 @@
 const routes = {
     '/': {
         route: '/index.html',
+        enabled: true,
     },
-    '/about': { route: '/routes/about.html' },
+    '/about': {
+        route: '/routes/about.html',
+        enabled: true,
+    },
+    '/no-spa-nav': {
+        route: '/routes/no-spa-nav.html',
+        enabled: false,
+    },
 }
 
 async function router() {
     const path = window.location.pathname
+    const routeConfig = routes[path]
+
+    if (routeConfig && routeConfig.enabled === false) {
+        window.location.replace(routeConfig.route)
+        return
+    }
 
     try {
-        const route = routes[path]?.route
+        const route = routeConfig?.route
 
         if (!route) {
             throw new Error('Page not found')
@@ -41,6 +55,14 @@ async function router() {
 }
 
 function navigateTo(url) {
+    const urlObj = new URL(url, window.location.origin)
+    const targetRoute = routes[urlObj.pathname]
+
+    if (targetRoute && targetRoute.enabled === false) {
+        window.location.href = targetRoute.route
+        return
+    }
+
     window.history.pushState(null, null, url)
     router()
 }
