@@ -7,9 +7,14 @@ const routes = {
 
 async function router() {
     const path = window.location.pathname
-    const route = routes[path]?.route || routes['/'].route
 
     try {
+        const route = routes[path]?.route
+
+        if (!route) {
+            throw new Error('Page not found')
+        }
+
         const response = await fetch(route)
 
         if (!response.ok) {
