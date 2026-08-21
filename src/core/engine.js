@@ -1,7 +1,10 @@
+import { LoadingBar } from './loading-bar.js'
+
 export class Engine {
     constructor(options = {}) {
         this.routes = options.routes || []
         this.enabled = options.enabled !== undefined ? options.enabled : true
+        this.loadingBar = new LoadingBar()
 
         this.init()
     }
@@ -114,7 +117,11 @@ export class Engine {
     }
 
     async router(url = window.location.href) {
+        this.loadingBar.start()
+
         try {
+            await new Promise((resolve) => setTimeout(resolve, 400))
+
             const response = await fetch(url)
 
             if (!response.ok) {
@@ -125,6 +132,8 @@ export class Engine {
             this.renderPage(html)
         } catch (error) {
             document.body.innerHTML = '<h1>404</h1><p>Page not found.</p>'
+        } finally {
+            this.loadingBar.done()
         }
     }
 
