@@ -1,4 +1,4 @@
-class Engine {
+export class Engine {
     constructor(options = {}) {
         this.routes = options.routes || []
         this.enabled = options.enabled !== undefined ? options.enabled : true
