@@ -1,0 +1,12 @@
+{
+  "name": "vanilla-js-spa-engine",
+  "version": "1.0.0",
+  "description": "A lightweight, dependency-free Vanilla JS Single Page Application engine",
+  "scripts": {
+    "start": "live-server src --entry-file=index.html",
+    "test": "live-server . --open=tests/index.html --entry-file=tests/index.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
