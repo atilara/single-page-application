@@ -1,10 +1,12 @@
 import { LoadingBar } from './loading-bar.js'
+import { ComponentCache } from './component-cache.js'
 
 export class Engine {
     constructor(options = {}) {
         this.routes = options.routes || []
         this.enabled = options.enabled !== undefined ? options.enabled : true
         this.loadingBar = new LoadingBar()
+        this.componentCache = new ComponentCache()
 
         this.init()
     }
@@ -145,13 +147,17 @@ export class Engine {
             document.title = newDoc.title
         }
 
+        this.componentCache.save(document.body)
+
         if (newDoc.body) {
-            document.body.innerHTML = newDoc.body.innerHTML
+            this.componentCache.restore(newDoc.body)
+            document.body.replaceChildren(...newDoc.body.childNodes)
         } else {
             document.body.innerHTML = html
         }
 
         this.executeScripts(document.body)
+        document.dispatchEvent(new CustomEvent('spa:rendered'))
     }
 
     executeScripts(container) {
