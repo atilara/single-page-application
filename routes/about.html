@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Vanilla JS SPA</title>
+</head>
+
+<body>
+  <h1>SPA Exercise</h1>
+  <h3>Current Time: <strong id="time"></strong></h3>
+
+  <p>Lorem ipsum dolor sit amet...</p>
+
+  <script type="text/javascript">
+    var timeNode = document.querySelector('#time');
+    var displayCurrentTime = function () {
+      var now = new Date();
+      timeNode.innerHTML = [
+        now.getHours(),
+        now.getMinutes(),
+        now.getSeconds()
+      ].join(':');
+    };
+    displayCurrentTime();
+    setInterval(displayCurrentTime, 1000);
+  </script>
+
+  <a href="../index.html">Back</a>
+
+  <div class="cached-widget"
+    style="padding: 1rem; margin: 1rem 0; border: 2px dashed #007bff; border-radius: 8px; background: #f8f9fa;">
+    <h3 style="margin-top:0;">Global Search & Filter</h3>
+    <p>This widget preserves its state across page navigations!</p>
+
+    <label>
+      <input type="checkbox" class="demo-toggle" data-cache-id="demo-toggle" />
+      Enable Advanced Mode
+    </label>
+    <br><br>
+
+    <input type="text" placeholder="Type a search query..." data-cache-id="demo-search"
+      style="width: 100%; padding: 8px; box-sizing: border-box;" />
+
+    <div data-cache-id="demo-clicks-wrapper" style="margin-top: 1rem;">
+      Clicks: <strong class="demo-clicks">0</strong>
+      <button class="demo-btn" style="margin-left: 10px; padding: 4px 12px; cursor: pointer;">Click Me</button>
+    </div>
+  </div>
+  <script type="module" src="../app.js"></script>
+</body>
+
+</html>
