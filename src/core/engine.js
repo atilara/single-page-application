@@ -122,8 +122,6 @@ export class Engine {
         this.loadingBar.start()
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 400))
-
             const response = await fetch(url)
 
             if (!response.ok) {
